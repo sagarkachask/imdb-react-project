@@ -1,9 +1,14 @@
 import { FaImdb } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import { loginUser } from "./apiCalls";
 
 export default function LogIn() {
-  const signInSubmit = (e) => {
+  const logInSubmit = (e) => {
     e.preventDefault();
+    const username = document.getElementById("loginName").value;
+    const password = document.getElementById("loginPassword").value;
+    const loginData = loginUser({ username, password });
+    console.log(loginData)
   };
 
   return (
@@ -11,7 +16,7 @@ export default function LogIn() {
       className="card mx-auto shadow p-3 mb-5 bg-body rounded"
       style={{ width: "30%" }}
     >
-      <form onSubmit={signInSubmit}>
+      <form onSubmit={logInSubmit}>
         <div className="mb-4 d-flex w-75 mx-auto justify-content-center fs-1">
           <FaImdb />
         </div>

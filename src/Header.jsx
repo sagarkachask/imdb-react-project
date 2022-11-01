@@ -1,8 +1,11 @@
 import Gravatar from "react-gravatar";
 import { NavLink } from "react-router-dom";
 import { FaImdb } from "react-icons/fa";
+import { getCurrentUser } from "./apiCalls";
 
 export default function Header() {
+  const currentUser = getCurrentUser();
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
@@ -27,18 +30,26 @@ export default function Header() {
               </NavLink>
             </li> */}
           </ul>
-          <div
-            style={{ overflow: "hidden" }}
-            className="bg-info rounded-circle me-3"
-          >
-            <NavLink className="nav-link" to="/login">
-              <Gravatar
-                style={{ width: "2rem", height: "2rem" }}
-                title="Sagar Kacha"
-                email="sagar.kacha@mlveda.com"
-              />
-            </NavLink>
-          </div>
+          {currentUser ? (
+            <div
+              style={{ overflow: "hidden" }}
+              className="bg-info rounded-circle me-3"
+            >
+              <NavLink className="nav-link" to="/login">
+                <Gravatar
+                  style={{ width: "2rem", height: "2rem" }}
+                  title={currentUser?.name}
+                  email={currentUser?.email}
+                />
+              </NavLink>
+            </div>
+          ) : (
+            <div style={{ overflow: "hidden" }} className="me-3">
+              <button type="button" className="btn btn-outline-primary">
+                <NavLink to="/login">Log In</NavLink>
+              </button>
+            </div>
+          )}
         </div>
       </nav>
     </>

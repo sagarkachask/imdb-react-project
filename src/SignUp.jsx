@@ -1,13 +1,30 @@
 import { FaImdb } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import { createUser } from "./apiCalls";
 
 export default function SignUp() {
+  const signUpSubmit = (e) => {
+    e.preventDefault();
+    let userName = document.getElementById("userName").value;
+    let userAge = Number(document.getElementById("userAge").value);
+    let userEmail = document.getElementById("userEmail").value;
+    let userPassword = document.getElementById("userPassword").value;
+    if (userName && userAge && userEmail && userPassword) {
+      createUser({
+        age: userAge,
+        name: userName,
+        email: userEmail,
+        password: userPassword,
+      });
+    }
+  };
+
   return (
     <div
       className="card mx-auto shadow p-3 mb-5 bg-body rounded"
       style={{ width: "30%" }}
     >
-      <form>
+      <form id="signup" onSubmit={signUpSubmit}>
         <div className="mb-4 d-flex w-75 mx-auto justify-content-center fs-1">
           <FaImdb />
         </div>
@@ -47,7 +64,7 @@ export default function SignUp() {
         <div className="text-center">
           <p>
             Already a member? <NavLink to="/login">Log In</NavLink>
-             {/* <a href="#!">Log In</a> */}
+            {/* <a href="#!">Log In</a> */}
           </p>
         </div>
       </form>
