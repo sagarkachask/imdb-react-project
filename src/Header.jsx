@@ -45,8 +45,13 @@ export default function Header() {
             </div>
           ) : (
             <div style={{ overflow: "hidden" }} className="me-3">
-              <button type="button" className="btn btn-outline-primary">
-                <NavLink to="/login">Log In</NavLink>
+              <button type="button" className="btn btn-outline-light">
+                <NavLink
+                  to="/login"
+                  style={{ color: "unset", textDecoration: "unset" }}
+                >
+                  Log In
+                </NavLink>
               </button>
             </div>
           )}
