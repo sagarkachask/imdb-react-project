@@ -1,8 +1,10 @@
 import { FaImdb } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { createUser } from "./apiCalls";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
   const signUpSubmit = (e) => {
     e.preventDefault();
     let userName = document.getElementById("userName").value;
@@ -15,6 +17,8 @@ export default function SignUp() {
         name: userName,
         email: userEmail,
         password: userPassword,
+      }).then(() => {
+        navigate("/login");
       });
     }
   };

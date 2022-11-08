@@ -2,9 +2,23 @@ import Gravatar from "react-gravatar";
 import { NavLink } from "react-router-dom";
 import { FaImdb } from "react-icons/fa";
 import { getCurrentUser } from "./apiCalls";
+import { BiLoaderCircle } from "react-icons/bi";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Header() {
-  const currentUser = getCurrentUser();
+  let { data: currentUser, isLoading } = useQuery(["currentUser"], () => {
+    const currentUserData = getCurrentUser();
+    return currentUserData.then((res) => res.data);
+  });
+  // const isLoading = false
+  // let currentUser = window.localStorage.getItem("imdb_user");
+  // if (currentUser) currentUser = JSON.parse(currentUser);
+  // if (!currentUser) {
+  //   getCurrentUser().then((res) => {
+  //     currentUser = res.data;
+  //     window.localStorage.setItem("imdb_user", JSON.stringify(currentUser));
+  //   });
+  // }
 
   return (
     <>
@@ -19,23 +33,15 @@ export default function Header() {
                 Movies
               </NavLink>
             </li>
-            {/* <li className="nav-item">
-              <NavLink className="nav-link" to="/actors">
-                Actors
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/actresses">
-                Actresses
-              </NavLink>
-            </li> */}
           </ul>
-          {currentUser ? (
+          {isLoading ? (
+            <BiLoaderCircle style={{ color: "white" }} />
+          ) : currentUser ? (
             <div
               style={{ overflow: "hidden" }}
               className="bg-info rounded-circle me-3"
             >
-              <NavLink className="nav-link" to="/login">
+              <NavLink className="nav-link" to="/profile">
                 <Gravatar
                   style={{ width: "2rem", height: "2rem" }}
                   title={currentUser?.name}

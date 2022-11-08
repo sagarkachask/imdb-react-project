@@ -1,14 +1,19 @@
 import { FaImdb } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { loginUser } from "./apiCalls";
 
 export default function LogIn() {
+  const navigate = useNavigate();
+
   const logInSubmit = (e) => {
     e.preventDefault();
     const username = document.getElementById("loginName").value;
     const password = document.getElementById("loginPassword").value;
-    const loginData = loginUser({ username, password });
-    console.log(loginData)
+    loginUser({ username, password }).then((res) => {
+      window.localStorage.setItem("imdb_token", res.data.token);
+      window.localStorage.setItem("imdb_user", JSON.stringify(res.data.user));
+      navigate("/movies");
+    });
   };
 
   return (
