@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { getCurrentUser } from "./apiCalls";
+// import { useQuery } from "@tanstack/react-query";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+// import { getCurrentUser } from "./apiCalls";
 import "./App.css";
 import Header from "./Header";
 import LogIn from "./LogIn";
@@ -27,7 +27,10 @@ function App() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/movies" element={<Movies />} />
+          <Route
+            path="/movies"
+            element={currentUser ? <Movies /> : <Navigate to="/login" />}
+          />
           <Route
             path="*"
             element={<h2>Oops! Page not found. Maybe check the URL?</h2>}

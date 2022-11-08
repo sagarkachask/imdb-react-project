@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const imdbAxios = axios.create({
-  baseURL: "http://34.208.44.89:3006",
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 export const createUser = ({ age, name, email, password }) => {
