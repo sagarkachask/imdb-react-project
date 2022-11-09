@@ -1,24 +1,11 @@
 import Gravatar from "react-gravatar";
 import { NavLink } from "react-router-dom";
 import { FaImdb } from "react-icons/fa";
-import { getCurrentUser } from "./apiCalls";
-import { BiLoaderCircle } from "react-icons/bi";
-import { useQuery } from "@tanstack/react-query";
+import UserProfileContext from "./contexts";
+import { useContext } from "react";
 
 export default function Header() {
-  let { data: currentUser, isLoading } = useQuery(["currentUser"], () => {
-    const currentUserData = getCurrentUser();
-    return currentUserData.then((res) => res.data);
-  });
-  // const isLoading = false
-  // let currentUser = window.localStorage.getItem("imdb_user");
-  // if (currentUser) currentUser = JSON.parse(currentUser);
-  // if (!currentUser) {
-  //   getCurrentUser().then((res) => {
-  //     currentUser = res.data;
-  //     window.localStorage.setItem("imdb_user", JSON.stringify(currentUser));
-  //   });
-  // }
+  const [currentUser, ] = useContext(UserProfileContext)
 
   return (
     <>
@@ -34,9 +21,7 @@ export default function Header() {
               </NavLink>
             </li>
           </ul>
-          {isLoading ? (
-            <BiLoaderCircle style={{ color: "white" }} />
-          ) : currentUser ? (
+          {currentUser ? (
             <div
               style={{ overflow: "hidden" }}
               className="bg-info rounded-circle me-3"

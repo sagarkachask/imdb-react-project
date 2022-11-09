@@ -1,24 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "./apiCalls";
 import { RiEdit2Line } from "react-icons/ri";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import ReactTooltip from "react-tooltip";
+import { useContext } from "react";
+import UserProfileContext from "./contexts";
 
 export default function UserProfile() {
   const navigate = useNavigate();
-
-  let currentUser = window.localStorage.getItem("imdb_user");
-  if (currentUser) currentUser = JSON.parse(currentUser);
-  if (!currentUser) {
-    getCurrentUser().then((res) => {
-      currentUser = res.data;
-      window.localStorage.setItem("imdb_user", JSON.stringify(currentUser));
-    });
-  }
+  const [currentUser, setCurrentUser] = useContext(UserProfileContext);
 
   const logoutUser = () => {
     window.localStorage.removeItem("imdb_token");
     window.localStorage.removeItem("imdb_user");
+    setCurrentUser(null)
     navigate("/login");
   };
 

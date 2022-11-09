@@ -1,4 +1,3 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { searchMovies } from "./apiCalls";
 import SearchResultMovies from "./SearchResultMovies";
@@ -10,19 +9,8 @@ export default function SearchBar() {
   const [skipValue, setSkipValue] = useState(0);
   const [sortOrder, setSortOrder] = useState("asc");
   const [sort, setSort] = useState("genres");
-
-  const queryClient = useQueryClient();
-
-  const { data: movies, isLoading } = useQuery(["movies"], () => {
-    const getMovies = searchMovies({
-      limit: limitValue,
-      sort: sort,
-      sortOrder: sortOrder,
-      searchText: searchText,
-      skip: skipValue,
-    });
-    return getMovies.then((res) => res.data);
-  });
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const searchMoviesSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +21,8 @@ export default function SearchBar() {
       searchText: searchText,
       skip: skipValue,
     }).then((res) => {
-      queryClient.setQueryData(["movies"], res.data);
+      setIsLoading(false);
+      setMovies(res.data);
     });
   };
 

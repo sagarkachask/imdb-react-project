@@ -14,6 +14,10 @@ export const getCurrentUser = () => {
     return imdbAxios.get("/user/currentuser", {
       headers: { Authorization: `Bearer ${token}` },
     });
+  } else {
+    return new Promise(() => {
+      throw new Error("token error");
+    }).catch((err) => console.error(err));
   }
 };
 
