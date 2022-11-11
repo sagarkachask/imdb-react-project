@@ -1,29 +1,15 @@
 import { useState } from "react";
-import { searchMovies } from "./apiCalls";
-import SearchResultMovies from "./SearchResultMovies";
-import { BiLoaderCircle } from "react-icons/bi";
 
-export default function SearchBar() {
-  const [searchText, setSearchText] = useState("");
-  const [limitValue, setLimitValue] = useState(10);
-  const [skipValue, setSkipValue] = useState(0);
-  const [sortOrder, setSortOrder] = useState("asc");
+export default function SearchBar({ fetching, onChange }) {
+  const [limit, setLimit] = useState(10);
   const [sort, setSort] = useState("genres");
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [searchText, setSearchText] = useState("");
+  const [skip, setSkip] = useState(0);
 
   const searchMoviesSubmit = (e) => {
     e.preventDefault();
-    searchMovies({
-      limit: limitValue,
-      sort: sort,
-      sortOrder: sortOrder,
-      searchText: searchText,
-      skip: skipValue,
-    }).then((res) => {
-      setIsLoading(false);
-      setMovies(res.data);
-    });
+    onChange({ limit, sort, sortOrder, searchText, skip });
   };
 
   return (
@@ -36,6 +22,7 @@ export default function SearchBar() {
         <div className="d-flex flex-column me-3" style={{ width: "40%" }}>
           <label>Search Something</label>
           <input
+            disabled={fetching}
             autoComplete="off"
             className="form-control"
             value={searchText}
@@ -45,6 +32,7 @@ export default function SearchBar() {
         <div className="d-flex flex-column me-3" style={{ width: "20%" }}>
           <label>Select a Sort Parameter</label>
           <select
+            disabled={fetching}
             className="form-select"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
@@ -59,6 +47,7 @@ export default function SearchBar() {
         <div className="d-flex flex-column me-3" style={{ width: "20%" }}>
           <label>Select a Sort Order</label>
           <select
+            disabled={fetching}
             className="form-select"
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
@@ -70,28 +59,33 @@ export default function SearchBar() {
         <div className="d-flex flex-column me-3" style={{ width: "5%" }}>
           <label>Limit</label>
           <input
+            disabled={fetching}
             className="form-control"
             type="number"
             min="0"
-            value={limitValue}
-            onChange={(e) => setLimitValue(e.target.value)}
+            value={limit}
+            onChange={(e) => setLimit(e.target.value)}
           />
         </div>
         <div className="d-flex flex-column me-3" style={{ width: "5%" }}>
           <label>Skip</label>
           <input
+            disabled={fetching}
             className="form-control"
             type="number"
             min="0"
-            value={skipValue}
-            onChange={(e) => setSkipValue(e.target.value)}
+            value={skip}
+            onChange={(e) => setSkip(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-outline-dark align-self-end">
+        <button
+          type="submit"
+          className="btn btn-outline-dark align-self-end"
+          disabled={fetching}
+        >
           Search
         </button>
       </form>
-      {isLoading ? <BiLoaderCircle /> : <SearchResultMovies movies={movies} />}
     </>
   );
 }

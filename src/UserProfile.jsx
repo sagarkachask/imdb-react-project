@@ -23,12 +23,11 @@ export default function UserProfile() {
   };
 
   const updateUserData = () => {
-    console.log(userAge)
     const password = "himalaya";
     updateUserProfile({ name: userName, password, age: userAge }).then(
       (res) => {
-        window.localStorage.setItem("imdb_user", JSON.stringify(res.data))
-        setCurrentUser(res.data)
+        window.localStorage.setItem("imdb_user", JSON.stringify(res.data));
+        setCurrentUser(res.data);
         setEditUserName(false);
         setEditUserAge(false);
       }

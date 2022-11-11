@@ -35,21 +35,22 @@ export const updateUserProfile = ({ name, password, age }) => {
 };
 
 export const searchMovies = ({
-  limit,
-  sort = "genres",
-  sortOrder = "asc",
-  searchText = "",
-  skip,
+  queryKey: [
+    ,
+    { limit, sort = "genres", sortOrder = "asc", searchText = "", skip },
+  ],
 }) => {
   const token = window.localStorage.getItem("imdb_token");
   const params = { sort: sort, sortOrder: sortOrder };
   if (limit > 0) params["limit"] = limit;
   if (searchText) params["searchText"] = searchText;
   if (skip > 0) params["skip"] = skip;
-  return imdbAxios.get("/movies", {
-    params,
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  return imdbAxios
+    .get("/movies", {
+      params,
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => res.data);
 };
 
 export default imdbAxios;
