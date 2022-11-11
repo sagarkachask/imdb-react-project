@@ -25,6 +25,15 @@ export const loginUser = ({ username, password }) => {
   return imdbAxios.post("/auth/login", { username, password });
 };
 
+export const updateUserProfile = ({ name, password, age }) => {
+  const token = window.localStorage.getItem("imdb_token");
+  return imdbAxios.put(
+    "/user",
+    { name: name, password: password, age: Number(age) },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+};
+
 export const searchMovies = ({
   limit,
   sort = "genres",
