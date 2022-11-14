@@ -7,6 +7,7 @@ import LogIn from "./LogIn";
 import Movies from "./Movies";
 import SignUp from "./SignUp";
 import UserProfile from "./UserProfile";
+import 'antd/dist/antd.css';
 
 function App() {
   let [currentUser, setCurrentUser] = useState(null);

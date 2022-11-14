@@ -3,12 +3,18 @@ import { NavLink } from "react-router-dom";
 import { FaImdb } from "react-icons/fa";
 import UserProfileContext from "./contexts";
 import { useContext } from "react";
+// import { Menu } from "antd";
 
 export default function Header() {
   const [currentUser, ] = useContext(UserProfileContext)
+  // const items = [
+  //   { label: 'item 1', key: 'item-1' },
+  //   { label: 'item 2', key: 'item-2' },
+  // ];
 
   return (
     <>
+      {/* <Menu defaultSelectedKeys={["item-1"]} items={items} /> */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <NavLink className="navbar-brand fs-2 ms-3" to="/" end>
           <FaImdb />

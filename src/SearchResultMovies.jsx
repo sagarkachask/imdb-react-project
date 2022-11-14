@@ -1,20 +1,27 @@
 import { useState } from "react";
 import MovieCard from "./MovieCard";
-import { FcNext, FcPrevious } from "react-icons/fc";
+// import { FcNext, FcPrevious } from "react-icons/fc";
+import { Pagination } from "antd";
 
 export default function SearchResultMovies({ movies }) {
   const [showMovies, setShowMovies] = useState(movies.slice(0, 4));
-  const [pageNumber, setPageNumber] = useState(1);
+  // const [pageNumber, setPageNumber] = useState(1);
+  const total = movies.length;
 
-  const previousMovies = () => {
-    setShowMovies(movies.slice((pageNumber - 2) * 4, (pageNumber - 1) * 4));
-    setPageNumber(pageNumber - 1);
-  };
+  // const previousMovies = () => {
+  //   setShowMovies(movies.slice((pageNumber - 2) * 4, (pageNumber - 1) * 4));
+  //   setPageNumber(pageNumber - 1);
+  // };
 
-  const nextMovies = () => {
-    setShowMovies(movies.slice(pageNumber * 4, (pageNumber + 1) * 4));
-    setPageNumber(pageNumber + 1);
-  };
+  // const nextMovies = () => {
+  //   setShowMovies(movies.slice(pageNumber * 4, (pageNumber + 1) * 4));
+  //   setPageNumber(pageNumber + 1);
+  // };
+
+  // const pageChange = (page) => {
+  //   // setPageNumber(page);
+  //   setShowMovies(movies.slice((page - 1) * 4, page * 4));
+  // };
 
   return (
     <>
@@ -25,7 +32,16 @@ export default function SearchResultMovies({ movies }) {
           </div>
         ))}
       </div>
-      <div className="d-flex justify-content-center">
+      <Pagination
+        className="d-flex align-items-center justify-content-center p-3"
+        onChange={(page) =>
+          setShowMovies(movies.slice((page - 1) * 4, page * 4))
+        }
+        defaultCurrent={1}
+        defaultPageSize={4}
+        total={total}
+      />
+      {/* <div className="d-flex justify-content-center">
         <button
           className="btn btn-outline-primary m-2"
           disabled={pageNumber === 1}
@@ -40,7 +56,7 @@ export default function SearchResultMovies({ movies }) {
         >
           <FcNext />
         </button>
-      </div>
+      </div> */}
     </>
   );
 }
