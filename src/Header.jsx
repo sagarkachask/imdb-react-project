@@ -1,12 +1,14 @@
-import Gravatar from "react-gravatar";
+// import Gravatar from "react-gravatar";
 import { NavLink } from "react-router-dom";
 import { FaImdb } from "react-icons/fa";
 import UserProfileContext from "./contexts";
 import { useContext } from "react";
+import { Avatar } from "antd";
 // import { Menu } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 export default function Header() {
-  const [currentUser, ] = useContext(UserProfileContext)
+  const [currentUser] = useContext(UserProfileContext);
   // const items = [
   //   { label: 'item 1', key: 'item-1' },
   //   { label: 'item 2', key: 'item-2' },
@@ -33,11 +35,13 @@ export default function Header() {
               className="bg-info rounded-circle me-3"
             >
               <NavLink className="nav-link" to="/profile">
-                <Gravatar
+                {/* <Gravatar
                   style={{ width: "2rem", height: "2rem" }}
                   title={currentUser?.name}
                   email={currentUser?.email}
-                />
+                /> */}
+                {/* <Avatar icon={<UserOutlined />} /> */}
+                <Avatar src="https://joeschmoe.io/api/v1/random" />
               </NavLink>
             </div>
           ) : (
