@@ -41,7 +41,7 @@ export default function SearchBar({ fetching, onChange }) {
             <option value="cast">cast</option>
             <option value="title">title</option>
             <option value="year">year</option>
-            <option value="imdb.rating">imdb.rating</option>
+            <option value="imdb.rating">imdb rating</option>
           </select>
         </div>
         <div className="d-flex flex-column me-3" style={{ width: "20%" }}>
