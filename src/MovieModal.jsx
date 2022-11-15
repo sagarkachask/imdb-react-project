@@ -1,26 +1,33 @@
-import ReactModal from "react-modal";
-import { IoMdClose } from "react-icons/io";
+// import ReactModal from "react-modal";
+// import { IoMdClose } from "react-icons/io";
+import { Modal } from "antd";
 
-ReactModal.setAppElement(document.getElementById("root"));
+// ReactModal.setAppElement(document.getElementById("root"));
 
 export default function MovieModal({ modalIsOpen, setIsOpen, movie }) {
   const date = movie?.released ? new Date(movie.released) : null;
   const released = date
     ? date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()
     : "NA";
-
+  
   return (
     <>
-      <ReactModal isOpen={modalIsOpen} onRequestClose={() => setIsOpen(false)}>
+      <Modal
+        open={modalIsOpen}
+        footer={null}
+        centered={true}
+        onCancel={() => setIsOpen(false)}
+        width="unset"
+      >
         <div className="d-flex justify-content-between mx-3 mb-3">
           <h3>{movie.title}</h3>
-          <button
+          {/* <button
             className="btn btn-outline-dark btn-sm"
             onClick={() => setIsOpen(false)}
             style={{ height: "fit-content" }}
           >
             <IoMdClose />
-          </button>
+          </button> */}
         </div>
         <div className="d-flex mx-3">
           <img
@@ -69,7 +76,7 @@ export default function MovieModal({ modalIsOpen, setIsOpen, movie }) {
             </div>
           </div>
         </div>
-      </ReactModal>
+      </Modal>
     </>
   );
 }

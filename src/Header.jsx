@@ -5,7 +5,7 @@ import UserProfileContext from "./contexts";
 import { useContext } from "react";
 import { Avatar } from "antd";
 // import { Menu } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+// import { UserOutlined } from "@ant-design/icons";
 
 export default function Header() {
   const [currentUser] = useContext(UserProfileContext);

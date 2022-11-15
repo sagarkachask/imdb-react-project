@@ -1,5 +1,6 @@
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input } from "antd";
 import { useContext, useState } from "react";
-import { FaImdb } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import { loginUser } from "./apiCalls";
 import UserProfileContext from "./contexts";
@@ -9,10 +10,9 @@ export default function LogIn() {
   const [loginError, setLoginError] = useState(false);
   let [, setCurrentUser] = useContext(UserProfileContext);
 
-  const logInSubmit = (e) => {
-    e.preventDefault();
-    const username = document.getElementById("loginName").value;
-    const password = document.getElementById("loginPassword").value;
+  const logInSubmit = (values) => {
+    const username = values.username;
+    const password = values.password;
     loginUser({ username, password })
       .then((res) => {
         window.localStorage.setItem("imdb_token", res.data.token);
@@ -28,56 +28,56 @@ export default function LogIn() {
 
   return (
     <div
-      className="card mx-auto shadow p-3 mb-5 bg-body rounded"
-      style={{ width: "30%" }}
+      className="card mx-auto shadow p-3 bg-body rounded"
+      style={{ width: "25%", height: "auto" }}
     >
-      <form onSubmit={logInSubmit}>
-        <div className="mb-4 d-flex w-75 mx-auto justify-content-center fs-1">
-          <FaImdb />
-        </div>
-        <div className="form-outline mb-4 d-flex flex-column w-75 mx-auto">
-          <label className="form-label" htmlFor="loginName">
-            Email
-          </label>
-          <input
-            type="email"
-            id="loginName"
-            className="form-control"
-            onFocus={() => setLoginError(false)}
-          />
-        </div>
-
-        <div className="form-outline mb-4 d-flex flex-column w-75 mx-auto">
-          <label className="form-label" htmlFor="loginPassword">
-            Password
-          </label>
-          <input
-            type="password"
-            id="loginPassword"
-            className="form-control"
-            onFocus={() => setLoginError(false)}
-          />
-        </div>
-        <button
-          type="submit"
-          className="btn btn-outline-dark mb-4 d-flex flex-column mx-auto"
+      <Form
+        name="normal_login"
+        className="login-form d-flex flex-column align-items-center justify-content-center"
+        initialValues={{ remember: true }}
+        onFinish={logInSubmit}
+      >
+        <Form.Item
+          name="username"
+          rules={[{ required: true, message: "Please input your Username!" }]}
+          style={{ width: "75%", marginTop: "24px" }}
         >
-          Log in
-        </button>
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Username"
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: "Please input your Password!" }]}
+          style={{ width: "75%" }}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
         {loginError && (
-          <p
-            className="loginError d-flex flex-column align-items-center"
-            style={{ fontSize: "0.75rem", color: "red" }}
-          >
-            Oops! Something went wrong. Maybe try again?
+          <p style={{ color: "red" }}>
+            Oops! Something went wrong! Maybe try again?
           </p>
         )}
-        <div className="text-center">
-          <p>
-            Not a member? <NavLink to="/signup">Sign Up</NavLink>
-          </p>
-        </div>
-      </form>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+            style={{ marginRight: "0.75rem" }}
+          >
+            Log in
+          </Button>
+          Or
+          <NavLink style={{ marginLeft: "0.75rem" }} to="/signup">
+            Sign Up
+          </NavLink>
+        </Form.Item>
+      </Form>
     </div>
   );
 }
